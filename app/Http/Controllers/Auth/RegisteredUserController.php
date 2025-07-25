@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
 
     Http::withHeaders(['Authorization' => 'EX9RF8AS9QGOPdEM',])->post('http://localhost:9090/plugins/restapi/v1/users', 
     [
-        'username' => $user->id, // userID как ты и хочешь
+        'username' => $user->id,
         'password' => $request->password,
         'name' => $user->username,
         'email' => $user->email,

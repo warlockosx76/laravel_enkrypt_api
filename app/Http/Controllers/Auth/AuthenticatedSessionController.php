@@ -19,15 +19,15 @@ class AuthenticatedSessionController extends Controller
     public function store(Request $request): JsonResponse
 {
     $request->validate([
-        'username' => 'required|string',
+        'email' => 'required|string',
         'password' => 'required|string',
     ]);
 
-    $user = User::where('username', $request->username)->first();
+    $user = User::where('email', $request->email)->first();
 
     if (!$user || !Hash::check($user->salt . $request->password, $user->password)) {
         return response()->json([
-            'message' => 'Неверный логин или пароль',
+            'message' => 'Wrong email or password',
         ], 401);
     }
 
