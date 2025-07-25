@@ -11,6 +11,9 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Http;
+
+use function Laravel\Prompts\password;
 
 class RegisteredUserController extends Controller
 {
@@ -38,6 +41,14 @@ class RegisteredUserController extends Controller
     event(new Registered($user));
 
     $token = $user->createToken('auth_token')->plainTextToken;
+
+    Http::withHeaders(['Authorization' => 'EX9RF8AS9QGOPdEM',])->post('http://localhost:9090/plugins/restapi/v1/users', 
+    [
+        'username' => $user->id, // userID как ты и хочешь
+        'password' => $request->password,
+        'name' => $user->username,
+        'email' => $user->email,
+    ]);
 
     return response()->json([
         'token' => $token,
